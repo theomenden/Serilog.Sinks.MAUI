@@ -6,7 +6,7 @@
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 		<RepositoryType>git</RepositoryType>
-		<PackageTags>serilog;maui;android;androidlogger;monodroid;ios;macos;nslog</PackageTags>
+		<PackageTags>serilog;maui;android;androidlogger;ios;macos;nslog</PackageTags>
 		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 		<TreatSpecificWarningsAsErrors />
 		<IncludeSymbols>True</IncludeSymbols>
@@ -16,6 +16,9 @@
 		<GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
 	</PropertyGroup>
 	<PropertyGroup>
+		<!-- Windows Targeting -->
+		<IsWindows>false</IsWindows>
+		<IsWindows Condition="$(TargetFramework.ToLower().StartsWith('net8.0-windows'))">true</IsWindows>
 		<!-- Android Targeting -->
 		<IsMonoAndroid>false</IsMonoAndroid>
 		<IsMonoAndroid Condition="$(TargetFramework.ToLower().StartsWith('monoandroid'))">true</IsMonoAndroid>
@@ -30,11 +33,12 @@
 		<_IsAndroid>false</_IsAndroid>
 		<_IsAndroid Condition="$(IsMonoAndroid) or '$(TargetFramework)'=='net8.0-android'">true</_IsAndroid>
 	</PropertyGroup>
-
 	<ItemGroup>
 		<PackageReference Include="Serilog" Version="3.1.1" />
 	</ItemGroup>
-
+	<ItemGroup Condition=" $(IsWindows) ">
+		<PackageReference Include="System.Diagnostics.EventLog" Version="8.0.0" />
+	</ItemGroup>
 	<ItemGroup>
 		<Compile Remove="**\*.cs" />
 		<None Include="Sinks\**\*.cs" />
@@ -45,7 +49,7 @@
 	<ItemGroup Condition=" $(_IsAppleHosted) ">
 		<Compile Include="Sinks\MAUI\Apple\**\*.cs" />
 	</ItemGroup>
-	<ItemGroup>
+	<ItemGroup Condition=" $(IsWindows) ">
 		<Compile Include="Sinks\MAUI\Windows\**\*.cs" />
 	</ItemGroup>
 </Project>
