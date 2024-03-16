@@ -1,0 +1,51 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+	<PropertyGroup>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst;net8.0-windows</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>serilog;maui;android;androidlogger;monodroid;ios;macos;nslog</PackageTags>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<TreatSpecificWarningsAsErrors />
+		<IncludeSymbols>True</IncludeSymbols>
+		<RootNamespace>Serilog</RootNamespace>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Description>A naive attempt at a Serilog Sink for writing log events for MAUI applications</Description>
+		<GeneratePackageOnBuild Condition="'$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
+	</PropertyGroup>
+	<PropertyGroup>
+		<!-- Android Targeting -->
+		<IsMonoAndroid>false</IsMonoAndroid>
+		<IsMonoAndroid Condition="$(TargetFramework.ToLower().StartsWith('monoandroid'))">true</IsMonoAndroid>
+		<!-- Apple Tproducts targeting -->
+		<IsIOS>false</IsIOS>
+		<IsIOS Condition="$(IsIOS) or '$(TargetFramework)'=='net8.0-ios'">true</IsIOS>
+		<IsCatalyst>false</IsCatalyst>
+		<IsCatalyst Condition="$(TargetFramework.ToLower().StartsWith('net8.0-maccatalyst'))">true</IsCatalyst>
+		<!-- Final Conditionals -->
+		<_IsAppleHosted>false</_IsAppleHosted>
+		<_IsAppleHosted Condition=" $(IsIOS) or $(IsCatalyst)">true</_IsAppleHosted>
+		<_IsAndroid>false</_IsAndroid>
+		<_IsAndroid Condition="$(IsMonoAndroid) or '$(TargetFramework)'=='net8.0-android'">true</_IsAndroid>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Serilog" Version="3.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="**\*.cs" />
+		<None Include="Sinks\**\*.cs" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(_IsAndroid) ">
+		<Compile Include="Sinks\MAUI\Android\**\*.cs" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(_IsAppleHosted) ">
+		<Compile Include="Sinks\MAUI\Apple\**\*.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Sinks\MAUI\Windows\**\*.cs" />
+	</ItemGroup>
+</Project>

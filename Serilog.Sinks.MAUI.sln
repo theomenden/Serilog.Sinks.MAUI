@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.MAUI", "Serilog.Sinks.MAUI\Serilog.Sinks.MAUI.csproj", "{78B36F76-3007-4B07-9576-5709BBCB73EE}"
+EndProject
+ProjectSection(SolutionItems) = preProject
+	global.json = global.json
+EndProjectSection
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{78B36F76-3007-4B07-9576-5709BBCB73EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78B36F76-3007-4B07-9576-5709BBCB73EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78B36F76-3007-4B07-9576-5709BBCB73EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78B36F76-3007-4B07-9576-5709BBCB73EE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BECF2AEB-DD68-45EE-8231-E38E1DABD655}
+	EndGlobalSection
+EndGlobal
